@@ -107,6 +107,10 @@ class Func():
             func.delet() # Вызов функции УДАЛИТЬ
         elif (menu == 'поиск'):
             func.poisk() # Вызов функции ПОИСК
+        elif (menu == '--'):
+            func.delete_all()
+        elif (menu == 'несколько'):
+            func.delete_neskolko()
         else:
             print(' Неверное значение \n')
             print('\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n')
@@ -395,11 +399,74 @@ class Func():
         '1)Для просмотра характеристик введите порядковый номер \n'
         '2)Чтобы добавить автомобиль нажмите + \n'
         '3)Чтобы удалить автомобиль нажмите -\n'
-        '4)Чтобы начать поиск введите "поиск"\n' )
+        '4)Чтобы начать поиск введите "поиск"\n'
+              '5)Чтобы удалить все автомобили нажмите --\n'
+              '6)Чтобы удалить несколько автомобилей введите "несколько"')
 
         while f1 == 0:
             func.prosmotr() # Вызов функции ПРОСМОТР(ИЗМЕНИТЬ)
+    def delete_all(self):
+        with open('Машинки1.txt', 'r') as r:  # , encoding="utf-8"
+            lines = r.readlines()
+            new = [line for line in lines if len(line) != 1]
+        with open('Машинки1.txt', 'w') as w:  # , encoding="utf-8"
+            w.writelines(new)
 
+        with open('Машинки1.txt', 'r') as s:  # , encoding="utf-8"
+            S = s.readlines()
+            a = len(S)  # Количество автомобилей
+            for x in S:
+                if x[0] == '' or x[0] == ' ':
+                    a -= 1
+        number = [int(x) for x in range(1, a + 1)]
+        print('Вы действительно хотите удалить все авто из списка?  (да / нет)')
+        d2 = str(input())
+        if d2 == 'да' or d2 == 'Да':
+            with open('Машинки1.txt', 'r') as r:  # , encoding="utf-8"
+                stroki = r.readlines()
+                with open('Машинки1.txt', 'w') as w:  # , encoding="utf-8"
+                    for line in stroki:
+                        w.write('')
+
+            print('\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nВсе автомобили удалены')
+            func.While()  # Вызов функции МЕНЮ
+        elif d2 == 'нет' or d2 == 'Нет':
+            print('\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n Отмена удаления \n')
+
+            func.While()  # Вызов функции МЕНЮ
+    def delete_neskolko(self):
+        with open('Машинки1.txt', 'r') as r:  # , encoding="utf-8"
+            lines = r.readlines()
+            new = [line for line in lines if len(line) != 1]
+        with open('Машинки1.txt', 'w') as w:  # , encoding="utf-8"
+            w.writelines(new)
+
+        with open('Машинки1.txt', 'r') as s:  # , encoding="utf-8"
+            S = s.readlines()
+            a = len(S)  # Количество автомобилей
+            for x in S:
+                if x[0] == '' or x[0] == ' ':
+                    a -= 1
+        number = [int(x) for x in range(1, a + 1)]
+        dell= input('Перечислите через запятую порядковые номера машин которые нужно удалить')
+        dell= [int(num) for num in dell.split(",")]
+        print('Вы действительно хотите удалить выбранные авто из списка?  (да / нет)')
+        d2 = str(input())
+        if d2 == 'да' or d2 == 'Да':
+            with open('Машинки1.txt', 'r') as r:  # , encoding="utf-8"
+                stroki = r.readlines()
+
+                with open('Машинки1.txt', 'w') as w:  # , encoding="utf-8"
+                    i=1
+                    for line in stroki:
+                        if i not in dell:
+                            w.write(line)
+                        i += 1
+            print('\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nАвтомобили удалёны')
+            func.While()  # Вызов функции МЕНЮ
+        elif d2 == 'нет' or d2 == 'Нет':
+            print('\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n Отмена удаления \n')
+            func.While()  # Вызов функции МЕНЮ
             
 '''            menu = input()
             if (menu[0] == '1' or menu[0] == '2' or menu[0] == '3' or menu[0] == '4' or menu[0] == '5' or menu[0] == '6' or\
@@ -450,4 +517,9 @@ class Func():
 
 func = Func() # Вызов класса
 func.While()  # Вызов функции МЕНЮ
+
+'''Audi,а333аа,красный,2004,4.5,300,вкл,откр
+Ferrari,о444оо,красный,2005,3.0,200,выкл,закр
+Ford,в222вв,желтый,2004,1.3,300,выкл,закр
+Audi,д666ум,красный,2019,308,105,выкл,закр'''
 
